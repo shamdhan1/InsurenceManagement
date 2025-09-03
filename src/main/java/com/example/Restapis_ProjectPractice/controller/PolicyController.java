@@ -1,4 +1,4 @@
-package com.example.Restapis_ProjectPractice.ClientApiResponse;
+package com.example.Restapis_ProjectPractice.controller;
 
 
 import com.example.Restapis_ProjectPractice.entity.Claim;

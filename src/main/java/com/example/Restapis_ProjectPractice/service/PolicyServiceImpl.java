@@ -11,6 +11,7 @@ import com.example.Restapis_ProjectPractice.repository.EndorsementRepository;
 import com.example.Restapis_ProjectPractice.repository.PolicyRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -76,31 +77,40 @@ public class PolicyServiceImpl implements PolicyService{
 
     @Override
     public List<Endorsement> getEndorsements(Long policyId) {
-        return List.of();
+        Policy policyById = getPolicyById(policyId);
+        return policyById.getEndorsements();
     }
 
     @Override
     public Policy updatePolicyStatus(Long policyId, String status) {
-        return null;
+        Policy policyById = getPolicyById(policyId);
+        policyById.setStatus(status);
+        return policyRepository.save(policyById);
     }
 
     @Override
     public List<Policy> searchPolicies(Long customerId, String type) {
-        return List.of();
+        return policyRepository.findByTypeAndCustomerId(type,customerId);
     }
 
     @Override
     public Policy renewPolicy(Long policyId) {
-        return null;
+        Policy policy = getPolicyById(policyId);
+        policy.setEndDate(policy.getEndDate().plusYears(1));
+        policy.setStatus("ACTIVE");
+        return policyRepository.save(policy);
     }
 
     @Override
     public List<Policy> getExpiringPolicies() {
-        return List.of();
+        LocalDate today = LocalDate.now();
+        LocalDate next30 = today.plusDays(30);
+        return policyRepository.findByEndDateBetween(today,next30);
     }
 
     @Override
     public List<Claim> getPolicyClaims(Long policyId) {
-        return List.of();
+        return claimRepository.findByPolicy_Id(policyId);
     }
+
 }
