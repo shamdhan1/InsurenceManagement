@@ -11,4 +11,8 @@ public interface PolicyRepository extends JpaRepository<Policy,Long> {
     List<Policy> findByCustomerId(Long customerId);
     List<Policy> findByTypeAndCustomerId(String type, Long customerId);
     List<Policy> findByEndDateBetween(LocalDate start, LocalDate end);
+
+    // in PolicyRepository.java
+    List<Policy> findByAgent_Id(Long agentId);
+
 }

@@ -42,6 +42,8 @@ public class Policy {
     @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
     private List<Claim> claims;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agent_id")
+    private Agent agent;
 
 }
